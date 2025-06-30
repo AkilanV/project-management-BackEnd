@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-// import { AuthModule } from './auth/auth.module';
-// import { ProjectModule } from './projects/project.module';
 import { AuthModule } from './auth/auth.module';
 import { ProjectsModule } from './projects/projects.module';
 import { NotificationsGateway } from './notifications/notifications.gateway';
@@ -12,16 +10,14 @@ import { NotificationsGateway } from './notifications/notifications.gateway';
       type: 'mysql',
       host: 'localhost',
       port: 3306,
-      username: 'root', // ⬅️ your MySQL username
-      password: 'root', // ⬅️ your MySQL password
-      database: 'project_management', // ⬅️ your DB name
+      username: 'root',
+      password: 'root',
+      database: 'project_management', //DB name
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
-      synchronize: true, // ⛔️ Only for development
+      synchronize: true,
     }),
     AuthModule,
     ProjectsModule,
-    // AuthModule,
-    // ProjectModule,
   ],
   providers: [NotificationsGateway],
 })
