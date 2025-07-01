@@ -12,13 +12,15 @@ export class ProjectsService {
     private notificationsGateway: NotificationsGateway, 
   ) {}
 
+
+  // CRUD Operations for Projects
+
   // Create Project
   async createProject(name: string, description?: string): Promise<Project> {
     const project = this.projectRepo.create({ name, description });
     const saved = await this.projectRepo.save(project);
 
-    this.notificationsGateway.sendNotification(`Project "${saved.name}" created.`);
-
+    this.notificationsGateway.emitProjectCreated(saved);
     return saved;
   }
 
@@ -38,11 +40,10 @@ export class ProjectsService {
   async updateProject(id: number, updates: Partial<Project>): Promise<Project> {
     const project = await this.getProjectById(id);
     Object.assign(project, updates);
-    const updated = await this.projectRepo.save(project);
+    const saved  = await this.projectRepo.save(project);
 
-    this.notificationsGateway.sendNotification(`Project "${updated.name}" updated.`);
-
-    return updated;
+      this.notificationsGateway.emitProjectUpdated(saved);
+    return saved;
   }
 
   // Delete Project
@@ -50,7 +51,7 @@ export class ProjectsService {
     const project = await this.getProjectById(id);
     await this.projectRepo.remove(project);
 
-    this.notificationsGateway.sendNotification(`Project "${project.name}" deleted.`);
+   this.notificationsGateway.emitProjectDeleted(id);
 
     return { message: 'Project deleted successfully' };
   }

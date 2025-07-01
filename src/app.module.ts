@@ -12,7 +12,7 @@ import { NotificationsGateway } from './notifications/notifications.gateway';
       port: 3306,
       username: 'root',
       password: 'root',
-      database: 'project_management', //DB name
+      database: 'project_management',
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
